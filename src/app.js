@@ -1,16 +1,21 @@
-import express from "express";
-import routes from "./routes/index.js";
-// const conexao = await conectaNaDataBase();
+import express from 'express';
+import conectaNaDatabase from './config/dbConnect.js';
+import routes from './routes/index.routes.js';
 
-// conexao.on("error", (erro) => {
-//   console.error("Erro de conexão", erro);
-// });
+const conexao = await conectaNaDatabase();
 
-// conexao.once("open", () => {
-//   console.log("conexão feita com sucesso");
-// });
+conexao.on('error', (erro) => {
+  console.error('Erro de conexao:', erro);
+});
+
+conexao.once('open', () => {
+  console.log('Conexao com o banco feita com sucesso');
+});
 
 const app = express();
 routes(app);
+// app.get('/', (req, res) => {
+//   res.status(200).send('Api Inphantil Moveis');
+// });
 
 export default app;
